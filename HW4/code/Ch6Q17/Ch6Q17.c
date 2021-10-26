@@ -1,12 +1,14 @@
-#include "NU32.h"          // constants, funcs for startup and UART
 #include "LCD.h"
+#include "NU32.h" // constants, funcs for startup and UART
 #define DELAYTIME 400000
 
 int state = 0;
 
-void debounce(){
+void debounce() {
   _CP0_SET_COUNT(0);
-  while(_CP0_GET_COUNT() < DELAYTIME) {;}
+  while (_CP0_GET_COUNT() < DELAYTIME) {
+    ;
+  }
 }
 
 void __ISR(_EXTERNAL_0_VECTOR, IPL2SOFT) Ext0ISR(void) { // step 1: the ISR
@@ -16,19 +18,22 @@ void __ISR(_EXTERNAL_0_VECTOR, IPL2SOFT) Ext0ISR(void) { // step 1: the ISR
   sprintf(stopString, "Press the USER button again to stop the timer\n");
   NU32_WriteUART3(stopString);
 
-  while (PORTDbits.RD9) { ; }
-  
-  et = _CP0_GET_COUNT()*12.5*1000000000;
+  while (PORTDbits.RD9) {
+    ;
+  }
+
+  et = _CP0_GET_COUNT() * 12.5 * 1000000000;
   sprintf(elapsedTime, "%f seconds elapsed", et);
   NU32_WriteUART3(elapsedTime);
-  IFS0bits.INT2IF = 0;            // clear interrupt flag IFS0<3>
+  IFS0bits.INT2IF = 0; // clear interrupt flag IFS0<3>
 }
 
 int main(void) {
-  NU32_Startup(); // cache on, min flash wait, interrupts on, LED/button init, UART init
+  NU32_Startup(); // cache on, min flash wait, interrupts on, LED/button init,
+                  // UART init
   LCD_Setup();
   char startString[100];
-  sprintf(startString,"Press the USER button to start the timer \r\n");
+  sprintf(startString, "Press the USER button to start the timer \r\n");
   NU32_WriteUART3(startString);
   __builtin_disable_interrupts(); // step 2: disable interrupts
   INTCONbits.INT2EP = 0;          // step 3: INT0 triggers on falling edge
@@ -38,8 +43,8 @@ int main(void) {
   IEC0bits.INT2IE = 1;            // step 6: enable INT0 by setting IEC0<3>
   __builtin_enable_interrupts();  // step 7: enable interrupts
                                   // Connect RD7 (USER button) to INT0 (RD0)
-  while(1) {
-      ; // do nothing, loop forever
+  while (1) {
+    ; // do nothing, loop forever
   }
 
   return 0;

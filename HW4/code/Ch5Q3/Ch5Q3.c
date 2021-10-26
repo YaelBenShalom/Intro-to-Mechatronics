@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-
 // Function for char operations
 void char_operations(char c1, char c2, char c3) {
   char outstring[100];
@@ -22,7 +21,8 @@ void int_operations(int i1, int i2, int i3) {
 }
 
 // Function for long long int operations
-void long_long_int_operations(long long int j1, long long int j2, long long int j3) {
+void long_long_int_operations(long long int j1, long long int j2,
+                              long long int j3) {
   char outstring[100];
 
   j3 = j1 + j2;

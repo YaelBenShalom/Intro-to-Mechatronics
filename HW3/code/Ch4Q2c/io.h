@@ -9,7 +9,7 @@ typedef struct {
   double inv0;
   double growth;
   int years;
-  double invarray[MAX_YEARS+1];
+  double invarray[MAX_YEARS + 1];
 } Investment;
 
 // Function prototypes:
