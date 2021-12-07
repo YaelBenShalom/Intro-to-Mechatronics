@@ -1,6 +1,6 @@
-# ME333-IntroToMechatronics
+# Intro to Mechatronics
 
-## Repo for ME333- Introduction to Mechatronics at Northwestern University
+A repository for Introduction to Mechatronics (ME333) at Northwestern University
 
 ## references
 
